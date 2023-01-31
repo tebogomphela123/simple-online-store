@@ -109,7 +109,7 @@ export class AuthController {
     @UseGuards(AuthGuard)
     @Put('admin/users/info')
     @ApiOkResponse({description: "Ok"})
-    async updateInfo(
+    async updateProfile(
         @Body('first_name') first_name: string,
         @Body('last_name') last_name: string,
         @Body('email') email: string,
@@ -121,6 +121,27 @@ export class AuthController {
             first_name, 
             last_name,
             email 
+        });
+        return this.userService.findOne({id});
+    }
+
+
+    @UseGuards(AuthGuard)
+    @Put('admin/users/password')
+    @ApiOkResponse({description: "Ok"})
+    async updatePassword(
+        @Body('password') password: string,
+        @Body('password_confirm') password_confirm: string,
+        @Req() request: Request
+    ){
+        const cookie = request.cookies['jwt'];
+        const {id} = await this.jwtService.verifyAsync(cookie);
+        if(password !== password_confirm){
+            throw new BadRequestException('Passwords do not match!');
+        }
+        const hashed = await bcrypt.hash(password, 12);
+        await this.userService.update(id, {  
+            password: hashed
         });
         return this.userService.findOne({id});
     }
