@@ -1,12 +1,8 @@
-Developer: Tebogo Gabriel Mphela
-v:0.0.1
 
-### This is a Nestjs application. Soon front-end part will be added.
+# This is a Nestjs application. Soon front-end part will be added.
 
 So far user can create account login, retrieve infor and loggout.
 If user loggout they must loggin first to access sensitive information.
-
-This application uses Docker and docker-compose 
  
 # stack used. 
  - Docker 
@@ -21,29 +17,36 @@ This application uses Docker and docker-compose
  - Use Stripe
  - Use Redis
 
-### GETTING STATED WITH APPLICATION
+# GETTING STATED WITH APPLICATION
 
 have docker and docker-composed installed
 
- # install typeorm and mysql2
+ ## install typeorm and mysql2
   - npm install --save @nestjs/typeorm typeorm mysql2
- # validate post request
-  - npm install class-validator --save
+ ## validate post request
+  - npm install clasinstalleds-validator --save
   - npm install class-transformer
- # password encryption
+ ## password encryption
   - npm i bcryptjs @types/bcryptjs
- # create token
+ ## create token
   - npm install --save @nestjs/jwt passport-jwt
   - npm install --save-dev @types/passport-jwt
- # cookie-parser
+ ## cookie-parser
   - npm i cookie-parser
-
- # run-time reflection on types
+ ## run-time reflection on types
   - npm install reflect-metadata --save
 
-# RUN
+## RUN
  - docker-compose up / docker compose up
+ - npm run start
 
+
+## MAINTAINER
+  - Tebogo Gabriel Mphela
+
+
+## Swagger UI/ API DOCS
+  - http://localhost:9000/api
 
 
 
