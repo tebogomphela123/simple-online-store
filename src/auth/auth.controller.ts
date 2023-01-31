@@ -22,10 +22,10 @@ import { ApiCreatedResponse,
          ApiTags , 
          ApiBadRequestResponse, 
          ApiOkResponse, 
-         ApiForbiddenResponse, 
-         ApiParam,
-         ApiBody} from '@nestjs/swagger';
+         ApiForbiddenResponse, } from '@nestjs/swagger';
 import { LoginDto } from './dot/login.dto';
+import { PasswordUpdateDTO } from './dot/passwordupdate.dto';
+import { UpdateProfileDTO } from './dot/updateprofile.dto';
 
 
 @Controller()
@@ -82,6 +82,7 @@ export class AuthController {
         return { message : 'success'};
     }
 
+
     @Get('admin/user')
     @UseGuards(AuthGuard)
     @ApiOkResponse({ description: 'Ok'})
@@ -101,7 +102,7 @@ export class AuthController {
     {
         response.clearCookie('jwt');
         return {
-            message: "sueccess"
+            message: "success"
         }
     }
 
@@ -109,18 +110,16 @@ export class AuthController {
     @UseGuards(AuthGuard)
     @Put('admin/users/info')
     @ApiOkResponse({description: "Ok"})
-    async updateProfile(
-        @Body('first_name') first_name: string,
-        @Body('last_name') last_name: string,
-        @Body('email') email: string,
+    async updateProfile(@Body() updateProfileDTO:UpdateProfileDTO,
         @Req() request: Request
     ){
         const cookie = request.cookies['jwt'];
         const {id} = await this.jwtService.verifyAsync(cookie);
+
         await this.userService.update(id, {  
-            first_name, 
-            last_name,
-            email 
+            first_name: updateProfileDTO.first_name,
+            last_name: updateProfileDTO.last_name,
+            email: updateProfileDTO.email
         });
         return this.userService.findOne({id});
     }
@@ -129,20 +128,21 @@ export class AuthController {
     @UseGuards(AuthGuard)
     @Put('admin/users/password')
     @ApiOkResponse({description: "Ok"})
-    async updatePassword(
-        @Body('password') password: string,
-        @Body('password_confirm') password_confirm: string,
+    async updatePassword(@Body() passwordUpdateDTO: PasswordUpdateDTO,
         @Req() request: Request
     ){
         const cookie = request.cookies['jwt'];
         const {id} = await this.jwtService.verifyAsync(cookie);
-        if(password !== password_confirm){
+
+        if(passwordUpdateDTO.password !== passwordUpdateDTO.password_confirm){
             throw new BadRequestException('Passwords do not match!');
         }
-        const hashed = await bcrypt.hash(password, 12);
+
+        const hashed = await bcrypt.hash(passwordUpdateDTO.password, 12);
         await this.userService.update(id, {  
             password: hashed
         });
+
         return this.userService.findOne({id});
     }
 }
