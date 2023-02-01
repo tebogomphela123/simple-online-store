@@ -4,6 +4,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
+import { ThrottlerModule } from '@nestjs/throttler';
 
 @Module({
   imports: [
@@ -16,6 +17,10 @@ import { AuthModule } from './auth/auth.module';
       database: 'ambassador',
       autoLoadEntities: true,
       synchronize: true,
+    }),
+    ThrottlerModule.forRoot({
+      ttl: 60,
+      limit: 10,
     }),
     UserModule,
     AuthModule,
