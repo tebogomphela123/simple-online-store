@@ -29,7 +29,7 @@ import { UpdateProfileDTO } from './dot/updateprofile.dto';
 
 
 @Controller()
-@ApiTags('Login and Loggout')
+@ApiTags('Admin')
 @ApiBadRequestResponse({description: 'Bad Request'})
 @ApiForbiddenResponse({ description: 'Forbidden Request'})
 @UseInterceptors(ClassSerializerInterceptor)
@@ -145,4 +145,6 @@ export class AuthController {
 
         return this.userService.findOne({id});
     }
+
+
 }
