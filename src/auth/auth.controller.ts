@@ -11,7 +11,7 @@ import { BadRequestException,
          Res, 
          UseGuards, 
          UseInterceptors } from '@nestjs/common';
-import { UserService } from 'src/user/user.service';
+import { UserService } from '../user/user.service';
 import { RegisterDto } from './dot/register.dto';
 import { JwtService } from '@nestjs/jwt'
 import * as bcrypt from 'bcryptjs';
