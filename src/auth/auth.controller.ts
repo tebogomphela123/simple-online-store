@@ -12,7 +12,7 @@ import { BadRequestException,
          UseGuards, 
          UseInterceptors } from '@nestjs/common';
 import { UserService } from '../user/user.service';
-import { RegisterDto } from './dot/register.dto';
+import { RegisterDto } from './dto/register.dto';
 import { JwtService } from '@nestjs/jwt'
 import * as bcrypt from 'bcryptjs';
 import { Response, 
@@ -23,9 +23,9 @@ import { ApiCreatedResponse,
          ApiBadRequestResponse, 
          ApiOkResponse, 
          ApiForbiddenResponse, } from '@nestjs/swagger';
-import { LoginDto } from './dot/login.dto';
-import { PasswordUpdateDTO } from './dot/passwordupdate.dto';
-import { UpdateProfileDTO } from './dot/updateprofile.dto';
+import { LoginDto } from './dto/login.dto';
+import { PasswordUpdateDTO } from './dto/passwordupdate.dto';
+import { UpdateProfileDTO } from './dto/updateprofile.dto';
 
 
 @Controller()

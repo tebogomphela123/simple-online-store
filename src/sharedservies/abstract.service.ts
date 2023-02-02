@@ -2,8 +2,8 @@ import { Repository } from "typeorm";
 
 
 export abstract class AbstractService{
-    constructor(
-      private readonly respository: Repository<any>
+    protected constructor(
+      protected readonly respository: Repository<any>
     ){
     }
     async save(options) {
@@ -19,6 +19,10 @@ export abstract class AbstractService{
     }
 
     async find(options){
-        return this.respository.findBy(options)
+        return this.respository.findBy(options);
+    }
+
+    async delete(id: number){
+        return this.respository.delete(id);
     }
 }
