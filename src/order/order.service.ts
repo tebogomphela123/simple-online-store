@@ -7,8 +7,8 @@ import { Order } from './order';
 @Injectable()
 export class OrderService extends AbstractService {
     constructor(
-        @InjectRepository(Order) private readonly orderService: Repository<Order>
+        @InjectRepository(Order) private readonly orderRepository: Repository<Order>
     ){
-        super(orderService);
+        super(orderRepository);
     }
 }

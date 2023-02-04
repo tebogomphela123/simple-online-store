@@ -1,5 +1,6 @@
-import { Controller, 
-         Get } from '@nestjs/common';
+import { ClassSerializerInterceptor, Controller, 
+         Get, 
+         UseInterceptors} from '@nestjs/common';
 import { OrderService } from './order.service';
 
 @Controller()
@@ -9,10 +10,10 @@ export class OrderController {
     ){}
 
     @Get('admin/order')
-    async all (res){
-       
-        return this.orderService.find({
-            
+    @UseInterceptors(ClassSerializerInterceptor)
+    async all (){
+            return this.orderService.find({
+                
         });
     }
 }
