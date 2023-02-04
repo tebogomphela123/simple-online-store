@@ -21,21 +21,6 @@ If user loggout they must loggin first to access sensitive information.
 
 have docker and docker-composed installed
 
- ## install typeorm and mysql2
-  - npm install --save @nestjs/typeorm typeorm mysql2
- ## validate post request
-  - npm install clasinstalleds-validator --save
-  - npm install class-transformer
- ## password encryption
-  - npm i bcryptjs @types/bcryptjs
- ## create token
-  - npm install --save @nestjs/jwt passport-jwt
-  - npm install --save-dev @types/passport-jwt
- ## cookie-parser
-  - npm i cookie-parser
- ## run-time reflection on types
-  - npm install reflect-metadata --save
-
 ## RUN
   ### this command line starts the container running the data base and the server
  - docker-compose up / docker compose up

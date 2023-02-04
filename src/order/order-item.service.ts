@@ -1,0 +1,15 @@
+import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { AbstractService } from '../sharedservies/abstract.service';
+import { Repository } from 'typeorm';
+import { Order } from './order';
+import { OrderItem } from './order-item';
+
+@Injectable()
+export class OrderItemService extends AbstractService {
+    constructor(
+        @InjectRepository(OrderItem) private readonly orderItemService: Repository<OrderItem>
+    ){
+        super(orderItemService);
+    }
+}
