@@ -28,7 +28,7 @@ export class OrderItem{
     @Column()
     ambassador_revenue: number;
 
-    @ManyToOne(()=> Order, order => order.order_items)
-    @JoinColumn({name: 'order_items'})
-    order: Order;
+    @ManyToOne((type)=> Order, order => order.order_items)
+    @JoinColumn({name: 'order_id'})
+    public order: Order;
 }

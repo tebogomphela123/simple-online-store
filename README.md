@@ -38,6 +38,9 @@ have docker and docker-composed installed
   - http://localhost:9000/api
 
 
+sudo chmod 666 /var/run/docker.sock
+
+
 
 
 

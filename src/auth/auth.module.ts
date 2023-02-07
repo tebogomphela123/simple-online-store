@@ -2,16 +2,13 @@ import { Module } from '@nestjs/common';
 import { UserModule } from '../user/user.module';
 import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
-import { JwtModule } from "@nestjs/jwt"
+import { SharedservicesModule } from '../sharedservies/sharedservices.module';
 
 @Module({
 
   imports: [
-    JwtModule.register({
-      secret: 'secrete',
-      signOptions: {expiresIn: '1d'}
-    }),
-    UserModule
+    UserModule,
+    SharedservicesModule
   ],
   controllers: [AuthController],
   providers: [AuthService]

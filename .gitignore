@@ -3,3 +3,4 @@
 .dbdata
 dist
 node_modules
+.idea

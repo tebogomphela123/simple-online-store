@@ -4,7 +4,9 @@ import { Body,
          Get, 
          Param, 
          Post, 
-         Put } from '@nestjs/common';
+         Put, 
+         UseGuards} from '@nestjs/common';
+import { AuthGuard } from 'src/auth/auth.guard';
 import { ProductDto } from './dto/product.dto';
 import { ProductService } from './product.service';
 
@@ -13,12 +15,14 @@ export class ProductController {
 
     constructor(private readonly productService: ProductService){}
 
+
+    @UseGuards(AuthGuard)
     @Get('admin/products')
     async all(){
         return this.productService.find();
     }
 
-
+    @UseGuards(AuthGuard)
     @Post('admin/products')
     async createProduct(
         @Body() body: ProductDto
@@ -27,6 +31,8 @@ export class ProductController {
     }
 
 
+
+    @UseGuards(AuthGuard)
     @Get('admin/product/:id')
     async getProduct(
         @Param('id') id:number
@@ -35,6 +41,7 @@ export class ProductController {
     }
 
 
+    @UseGuards(AuthGuard)
     @Put('admin/product/:id')
     async updateProduct(
         @Param('id') id: number,
@@ -45,6 +52,7 @@ export class ProductController {
     }
 
 
+    @UseGuards(AuthGuard)
     @Delete('admin/product/:id')
     async deleteProduct(
         @Param('id') id: number

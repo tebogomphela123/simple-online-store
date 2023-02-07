@@ -2,7 +2,7 @@ import { NestFactory } from "@nestjs/core";
 import { AppModule } from "../app.module";
 import * as faker from "faker";
 import { OrderService } from "../order/order.service";
-import { OrderItemService } from "../order/order-item.service";
+import { OrderItemService } from "../order/order_tem.service";
 import { randomInt } from "crypto";
 
 async function bootstrap() {
@@ -12,7 +12,7 @@ async function bootstrap() {
 
     const orderItemService = app.get(OrderItemService);
 
-    for (let index = 0; index < 2; index++) {
+    for (let index = 0; index < 1; index++) {
         const order = await orderService.save({ 
             user_id: randomInt(1, 30),
             code: faker.lorem.slug(2) ,

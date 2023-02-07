@@ -10,7 +10,7 @@ async function bootstrap() {
 
     const userService = app.get(UserService);
 
-    for (let index = 0; index < 30; index++) {
+    for (let index = 0; index < 10; index++) {
         await userService.save({
             first_name: faker.name.firstName(),
             last_name: faker.name.lastName(),
