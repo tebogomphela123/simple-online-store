@@ -8,6 +8,7 @@ import { BadRequestException,
          Put, 
          Req,
          Res, 
+         UnauthorizedException, 
          UseGuards, 
          UseInterceptors } from '@nestjs/common';
 import { UserService } from '../user/user.service';
@@ -37,33 +38,38 @@ export class AuthController {
     constructor(
         private userService: UserService, 
         private jwtService: JwtService){
-    }
+    } 
      
 
-    @Post('admin/register')
+    @Post(['admin/register', 'ambassador/register'])
     @ApiCreatedResponse({description: 'The record has been successfully created.'})
-    async register(@Body() body: RegisterDto ){
+    async register(
+        @Body() body: RegisterDto ,
+        @Req() request: Request
+        ){
 
         const {password_confirm, ...data} = body;
 
         if(body.password !== password_confirm){
             throw new BadRequestException('Passwords do not match!');
         }
+        console.log(request.path + " " + 'api/ambassador/register' )
 
         const hashed = await bcrypt.hash(body.password, 12);
         return this.userService.save(
             {...data,
             password: hashed,
-            is_ambassador: false}
+            is_ambassador: request.path === '/api/ambassador/register'}
         );
     }
 
 
-    @Post('admin/login')
+    @Post(['admin/login', 'ambassador/login'])
     @ApiCreatedResponse({description: 'Successfully logged in.'})
     async login(
         @Body() body:LoginDto,
-        @Res({passthrough: true}) response : Response
+        @Res({passthrough: true}) response : Response,
+        @Req() request: Request
     ){
         const user = await this.userService.findOne({email: body.email});
         if(!user){
@@ -73,41 +79,56 @@ export class AuthController {
             throw new BadRequestException('Invalid credentials')
         }
 
+        const adminLogin = request.path === '/api/admin/login';
+
+        if(adminLogin && user.is_ambassador){
+            throw UnauthorizedException;
+        }
+
+        console.log(user.is_ambassador)
+
         const jwt = await this.jwtService.signAsync({
-            id: user.id
+            id: user.id,
+            scope: adminLogin ? 'admin': 'ambassador'
         }); 
 
         response.cookie('jwt', jwt, {httpOnly: true})
-        return { message : 'success'};
+        return { message : 'Logged in...'}; 
     }
 
 
-    @Get('admin/user')
+    @Get(['admin/user', 'ambassador/user'])
     @UseGuards(AuthGuard)
     @ApiOkResponse({ description: 'Ok'})
     async user(@Req() request: Request){
 
         const cookie = request.cookies['jwt']
+
         const {id} = await this.jwtService.verifyAsync(cookie);
-        const user = await this.userService.findOne({id});
-        return user;
+
+        if(request.path === '/api/admin/user'){
+            
+            return this.userService.findOne({id});                      
+
+        }
+        return this.userService.findOne({id});
     }
 
 
     @UseGuards(AuthGuard)
-    @Post('admin/logout')
+    @Post(['admin/logout', 'ambassador/logout'])
     @ApiOkResponse({ description: 'Ok'})
     async logout( @Res({passthrough:true}) response: Response)
     {
         response.clearCookie('jwt');
         return {
-            message: "success"
+            message: "Logged out..."
         }
-    }
+    } 
 
 
     @UseGuards(AuthGuard)
-    @Put('admin/users/info')
+    @Put(['admin/users/info', 'ambassador/users/info'])
     @ApiOkResponse({description: "Ok"})
     async updateProfile(@Body() updateProfileDTO:UpdateProfileDTO,
         @Req() request: Request
@@ -125,7 +146,7 @@ export class AuthController {
 
 
     @UseGuards(AuthGuard)
-    @Put('admin/users/password')
+    @Put(['admin/users/password','ambassador/users/password'])
     @ApiOkResponse({description: "Ok"})
     async updatePassword(@Body() passwordUpdateDTO: PasswordUpdateDTO,
         @Req() request: Request

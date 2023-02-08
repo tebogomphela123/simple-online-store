@@ -2,12 +2,11 @@ import { Exclude, Expose } from "class-transformer";
 import { Link } from "../link/link";
 import { Column, 
          Entity,
-         ManyToMany,
          ManyToOne,
          OneToMany, 
          PrimaryGeneratedColumn, } from "typeorm";
 import { OrderItem } from "./order_item";
-import { link } from "fs";
+import { User } from "../user/user";
  
 @Entity('orders')
 export class Order{
@@ -59,6 +58,8 @@ export class Order{
     @OneToMany((type) => OrderItem, order_items => order_items.order)
     order_items: OrderItem[];
 
+    @ManyToOne(()=> User, user => user.orders, {createForeignKeyConstraints: false})
+    user: User;
 
     @ManyToOne(()=> Link, link => link.orders,
     {createForeignKeyConstraints: false})
@@ -69,8 +70,7 @@ export class Order{
         return `${this.first_name} ${this.last_name}`;
     }
 
-    // @Expose()
-    // get total(){
-    //     return this.order_items.reduce((s,i)=> s + i.admin_revenue, 0);
-    // }
+    get ambassador_revenue(): number{
+        return this.order_items.reduce((s,i)=> s + i.ambassador_revenue, 0);
+    }
 }

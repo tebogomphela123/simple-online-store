@@ -23,7 +23,7 @@ export abstract class AbstractService{
 
 
     async find(options = {}){
-        return this.respository.findBy(options);
+        return this.respository.find(options);
     }
 
     

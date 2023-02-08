@@ -31,4 +31,4 @@ export class OrderItem{
     @ManyToOne((type)=> Order, order => order.order_items)
     @JoinColumn({name: 'order_id'})
     public order: Order;
-}
+} 

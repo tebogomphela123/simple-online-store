@@ -2,7 +2,7 @@ import { ClassSerializerInterceptor, Controller,
          Get, 
          UseGuards, 
          UseInterceptors} from '@nestjs/common';
-import { AuthGuard } from 'src/auth/auth.guard';
+import { AuthGuard } from '../auth/auth.guard';
 import { OrderService } from './order.service';
 
 @Controller()
@@ -15,9 +15,9 @@ export class OrderController {
     @UseGuards(AuthGuard)
     @Get('admin/order')
     @UseInterceptors(ClassSerializerInterceptor)
-    async all (){
+    async all (): Promise<any>{
         return this.orderService.find({
-            // relations: ['order_']
+            relations: ['order_items'] 
         })
     }
 }
