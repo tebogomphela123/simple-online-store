@@ -1,4 +1,7 @@
-import {Column, Entity, Exclusion, OneToMany, PrimaryGeneratedColumn} from "typeorm";
+import { Column, 
+         Entity, 
+         OneToMany,
+         PrimaryGeneratedColumn} from "typeorm";
 import { Exclude } from "class-transformer";
 import { Order } from "../order/order";
 

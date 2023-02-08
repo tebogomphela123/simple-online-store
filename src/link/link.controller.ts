@@ -12,8 +12,8 @@ export class LinkController {
     @Get('admin/users/:id/links')
     async all(@Param('id') id: number){
         return this.LinkService.find({
-            // user: id
-            // relations: ['orders']
+            user: id,
+            relations: ['orders']
         })
     }
 }

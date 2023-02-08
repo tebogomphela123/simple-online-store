@@ -1,6 +1,13 @@
 import { Product } from "../product/product";
 import { User } from "../user/user";
-import { Column, Entity, JoinColumn, JoinTable, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Column,
+         Entity, 
+         JoinColumn,
+         JoinTable, 
+         ManyToMany,
+         ManyToOne, 
+         OneToMany, 
+         PrimaryGeneratedColumn } from "typeorm";
 import { Order } from "src/order/order";
 
 
