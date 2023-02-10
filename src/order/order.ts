@@ -70,6 +70,11 @@ export class Order{
         return `${this.first_name} ${this.last_name}`;
     }
 
+    @Expose()
+    get total(){
+        return this.order_items.reduce((s, i)=> s+i.admin_revenue, 0)
+    }
+
     get ambassador_revenue(): number{
         return this.order_items.reduce((s,i)=> s + i.ambassador_revenue, 0);
     }
