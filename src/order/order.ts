@@ -2,6 +2,7 @@ import { Exclude, Expose } from "class-transformer";
 import { Link } from "../link/link";
 import { Column, 
          Entity,
+         JoinColumn,
          ManyToOne,
          OneToMany, 
          PrimaryGeneratedColumn, } from "typeorm";
@@ -59,6 +60,7 @@ export class Order{
     order_items: OrderItem[];
 
     @ManyToOne(()=> User, user => user.orders, {createForeignKeyConstraints: false})
+    @JoinColumn({name: 'user_id'})
     user: User;
 
     @ManyToOne(()=> Link, link => link.orders,
@@ -78,4 +80,6 @@ export class Order{
     get ambassador_revenue(): number{
         return this.order_items.reduce((s,i)=> s + i.ambassador_revenue, 0);
     }
+
+
 }

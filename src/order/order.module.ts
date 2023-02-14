@@ -5,7 +5,7 @@ import { OrderItem } from './order_item';
 import { OrderItemService } from './order_tem.service';
 import { OrderController } from './order.controller';
 import { OrderService } from './order.service';
-import { SharedservicesModule } from '../sharedservies/sharedservices.module';
+import { SharedservicesModule } from '../sharedservices/sharedservices.module';
 
 @Module({
   imports:[

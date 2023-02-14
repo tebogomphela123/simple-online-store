@@ -6,6 +6,7 @@ import { ApiBadRequestResponse,
          ApiForbiddenResponse, 
          ApiOkResponse, 
          ApiTooManyRequestsResponse} from '@nestjs/swagger';
+import { User } from './user';
 import { UserService } from './user.service';
 
 
@@ -27,5 +28,21 @@ export class UserController {
                 is_ambassador: true
             }
         )
+    }
+
+    @Get('ambassador/rankings')
+    async ranking() {
+        const ambassadors: User[] =  await this.useService.find(
+            {
+                is_ambassador: true,
+                relations: ['orders', 'orders.order_items']
+            }
+        ) 
+        return ambassadors.map(ambassadors =>{
+            return{
+                name: ambassadors.name,
+                revenue: ambassadors.revenue
+            }
+        })
     }
 }

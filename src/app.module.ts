@@ -7,7 +7,7 @@ import { AuthModule } from './auth/auth.module';
 import { ProductModule } from './product/product.module';
 import { OrderModule } from './order/order.module';
 import { LinkModule } from './link/link.module';
-import { SharedservicesModule } from './sharedservies/sharedservices.module';
+import { SharedservicesModule } from './sharedservices/sharedservices.module';
 
 @Module({
   imports: [
