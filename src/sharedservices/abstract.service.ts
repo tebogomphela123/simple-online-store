@@ -11,22 +11,18 @@ export abstract class AbstractService{
         return this.respository.save(options);
     }
 
-
     async findOne(options){
         return this.respository.findOneBy(options);
     }
-
 
     async update(id: number, options){
         return this.respository.update(id, options);
     }
 
-
     async find(options = {}){
         return this.respository.find(options);
     }
 
-    
     async delete(id: number){
         return this.respository.delete(id);
     }
